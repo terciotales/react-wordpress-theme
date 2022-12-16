@@ -1,0 +1,24 @@
+{
+  "name" : "terciotales/react-wordpress-theme",
+  "description" : "Tema ",
+  "config" : {
+    "platform" : {
+      "php" : "8.0"
+    },
+    "optimize-autoloader" : true
+  },
+  "require" : {
+    "php" : ">=7.4"
+  },
+  "authors" : [
+    {
+      "name" : "Tércio Tales",
+      "email" : "terciotales@gmail.com"
+    }
+  ],
+  "autoload" : {
+    "classmap" : [
+      "inc/"
+    ]
+  }
+}
