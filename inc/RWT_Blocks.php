@@ -5,7 +5,7 @@ class RWT_Blocks {
         add_action('init', [$this, 'theme_block_additional_styles']);
     }
 
-    public function theme_block_additional_styles() {
+    public function theme_block_additional_styles(): void {
         $styled_blocks = [];
 
         foreach ($styled_blocks as $block_name) {
