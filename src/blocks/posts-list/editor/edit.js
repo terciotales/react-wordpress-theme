@@ -10,7 +10,7 @@ import {
 
 import PostsList from "../components/posts-list";
 
-const Block = (props) => {
+const Edit = (props) => {
     const {attributes, setAttributes} = props
 
     const inlineStyle = {};
@@ -19,8 +19,23 @@ const Block = (props) => {
         setAttributes({inlineStyle: inlineStyle});
     }, []);
 
-
     const blockProps = useBlockProps();
+
+    const args = {
+        categories: attributes.categories,
+        taxonomies: attributes.taxonomies,
+        postIn: attributes.postIn,
+        postNotIn: attributes.postNotIn,
+        postTypes: attributes.postTypes,
+        perPage: attributes.perPage,
+        offset: attributes.offset,
+        order: attributes.order,
+        orderBy: attributes.orderBy,
+        metaQuery: attributes.metaQuery,
+        search: attributes.search,
+        status: attributes.status,
+        blogId: attributes.blogId,
+    };
 
     return (
         <>
@@ -30,9 +45,9 @@ const Block = (props) => {
             />
 
             <div {...blockProps}>
-                <PostsList perPage={attributes.perPage}/>
+                <PostsList args={args}/>
             </div>
         </>
     );
 }
-export default Block;
+export default Edit;

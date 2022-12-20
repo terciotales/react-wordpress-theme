@@ -1,0 +1,28 @@
+.package-component-controller-buttons {
+    margin: -16px -16px 0 -16px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .button-tab {
+        height: auto;
+        padding: 6px 16px;
+        flex-grow: 1;
+        justify-content: center;
+
+        &.is-active {
+            background-color: #f0f0f0
+        }
+
+        span {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            p {
+                font-size: 10px;
+                margin-bottom: 0
+            }
+        }
+    }
+}

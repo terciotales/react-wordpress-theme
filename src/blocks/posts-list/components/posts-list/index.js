@@ -8,13 +8,15 @@ import {Button, __experimentalInputControl as InputControl} from "@wordpress/com
 /**
  * Block dependencies
  */
-import metadata from '../block.json';
-import Loader from "./loader";
-import PostCard from "./post-card";
+import metadata from '../../block.json';
+import Loader from "../loader/index.js";
+import PostCard from "../post-card/index.js";
 
-const PostsList = (props) => {
+const Index = (props) => {
+    const {args} = props;
+
+    const [perPage, setPerPage] = useState(args.perPage);
     const [posts, setPosts] = useState(null);
-    const [perPage, setPerPage] = useState(props.perPage);
 
     const request = useSelect(select => {
         const {getEntityRecords, hasFinishedResolution, isResolving} = select('core');
@@ -33,8 +35,7 @@ const PostsList = (props) => {
                 args
             ),
         };
-    }, [posts, perPage, props]);
-
+    }, [posts, perPage, args]);
 
     useEffect(() => {
         if (!request.isResolvingPosts && request.hasResolvedPosts && request.posts?.length) {
@@ -42,14 +43,9 @@ const PostsList = (props) => {
         }
     }, [request]);
 
-    const refreshPosts = useCallback(() => {
-
-    }, []);
-
     return (
         <div>
             <h1>Posts List</h1>
-            <Button isPrimary onClick={refreshPosts}>Recarregar</Button>
             <InputControl
                 label="Posts por página"
                 value={perPage}
@@ -79,4 +75,4 @@ const PostsList = (props) => {
 }
 
 
-export default PostsList;
+export default Index;

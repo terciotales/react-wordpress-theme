@@ -1,31 +1,81 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
-    "name": "react-wordpress-theme/posts-list",
-    "title": "Listagem de Posts",
-    "category": "react-wordpress-theme",
-    "version": "1.0.0",
-    "description": "",
-    "textdomain": "react-wordpress-theme",
-    "attributes": {
-        "perPage": {
-            "type": "number",
-            "default": 5
+    "$schema" : "https://schemas.wp.org/trunk/block.json",
+    "apiVersion" : 2,
+    "name" : "react-wordpress-theme/posts-list",
+    "title" : "Listagem de Posts",
+    "category" : "react-wordpress-theme",
+    "version" : "1.0.0",
+    "description" : "",
+    "textdomain" : "react-wordpress-theme",
+    "attributes" : {
+        "categories" : {
+            "type" : "array",
+            "default" : []
+        },
+        "taxonomies" : {
+            "type" : "array",
+            "default" : []
+        },
+        "postIn" : {
+            "type" : "array",
+            "default" : []
+        },
+        "postNotIn" : {
+            "type" : "array",
+            "default" : []
+        },
+        "postTypes" : {
+            "type" : "array",
+            "default" : [
+                "post"
+            ]
+        },
+        "perPage" : {
+            "type" : "number",
+            "default" : 10
+        },
+        "offset" : {
+            "type" : "number",
+            "default" : 0
+        },
+        "order" : {
+            "type" : "string",
+            "default" : "DESC"
+        },
+        "orderBy" : {
+            "type" : "string",
+            "default" : "date"
+        },
+        "metaQuery" : {
+            "type" : "object",
+            "default" : {}
+        },
+        "search" : {
+            "type" : "string",
+            "default" : ""
+        },
+        "status" : {
+            "type" : "array",
+            "default" : []
+        },
+        "blogId" : {
+            "type" : "number",
+            "default" : 1
         }
     },
-    "supports": {
-        "spacing": {
-            "blockGap": true,
-            "margin": true,
-            "padding": true,
-            "units": [
+    "supports" : {
+        "spacing" : {
+            "blockGap" : true,
+            "margin" : true,
+            "padding" : true,
+            "units" : [
                 "px",
                 "rem",
                 "%"
             ]
         }
     },
-    "style": "react-wordpress-theme-style-posts-list",
-    "script": "react-wordpress-theme-script-posts-list",
-    "editorStyle": "react-wordpress-theme-style-editor-posts-list"
+    "style" : "react-wordpress-theme-style-posts-list",
+    "script" : "react-wordpress-theme-script-posts-list",
+    "editorStyle" : "react-wordpress-theme-style-editor-posts-list"
 }
