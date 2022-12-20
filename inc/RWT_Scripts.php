@@ -1,7 +1,7 @@
 <?php
 
-class RWT_Scripts {
-    public function __construct() {
+class RWT_Scripts extends RTW_Setup {
+    public function setup() {
         add_action('wp_enqueue_scripts', [$this, 'load_assets']);
         add_action('after_setup_theme', [$this, 'add_support']);
     }

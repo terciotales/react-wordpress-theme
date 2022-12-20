@@ -1,7 +1,7 @@
 <?php
 
-class RWT_Supports {
-    public function __construct() {
+class RWT_Supports extends RTW_Setup {
+    public function setup() {
         add_action('after_setup_theme', [$this, 'theme_supports']);
         add_action('init', [$this, 'remove_supports']);
     }

@@ -1,12 +1,21 @@
 <?php
 
-class RTW_Application {
-    public function __construct() {
-        add_action('init', [$this, 'init_classes']);
+/**
+ * Class Nucleoweb_Application
+ *
+ * Classe principal de configuração dos plugins e temas.
+ *
+ * @since 1.2.0
+ */
+class RTW_Application extends RTW_Setup {
+
+    protected function setup() {
+        $this->init_setups();
     }
 
-    public function init_classes() {
-        new RTW_Scripts();
-        new RTW_Blocks();
+    private function init_setups() {
+        RWT_Blocks::get_instance()->init();
+        RWT_Scripts::get_instance()->init();
+        RWT_Supports::get_instance()->init();
     }
 }

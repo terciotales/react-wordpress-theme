@@ -1,7 +1,7 @@
 <?php
 
-class RWT_Blocks {
-    public function __construct() {
+class RWT_Blocks extends RTW_Setup {
+    public function setup() {
         add_action('init', [$this, 'theme_block_additional_styles']);
     }
 
