@@ -28,7 +28,7 @@ const PostsList = (props) => {
             />
 
             <div {...blockProps}>
-
+                <div className="posts-list"></div>
             </div>
         </>
     );

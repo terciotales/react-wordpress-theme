@@ -1,12 +1,12 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 2,
-    "name": "rtw/posts-list",
+    "name": "react-wordpress-theme/posts-list",
     "title": "Listagem de Posts",
-    "category": "rtw",
+    "category": "react-wordpress-theme",
     "version": "1.0.0",
     "description": "",
-    "textdomain": "rtw",
+    "textdomain": "react-wordpress-theme",
     "attributes": {
         "perPage": {
             "type": "number",

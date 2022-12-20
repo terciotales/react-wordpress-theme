@@ -14,8 +14,8 @@ class RTW_Application extends RTW_Setup {
     }
 
     private function init_setups() {
-        RWT_Blocks::get_instance()->init();
-        RWT_Scripts::get_instance()->init();
-        RWT_Supports::get_instance()->init();
+	    RWT_Scripts::get_instance()->init();
+	    RWT_Blocks::get_instance()->init();
+	    RWT_Supports::get_instance()->init();
     }
 }

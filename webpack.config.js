@@ -25,7 +25,7 @@ module.exports = {
         },
         {
             admin: path.resolve(__dirname, 'src/admin/index.js'),
-            'editor': path.resolve(__dirname, 'src/editor/index.js'),
+            'blocks': path.resolve(__dirname, 'src/blocks/index.js'),
             public: path.resolve(__dirname, 'src/public/index.js'),
         }
     ),
