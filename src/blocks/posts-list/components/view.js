@@ -7,7 +7,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-const BLOCK_CLASS = 'asdasdasd';
+const BLOCK_CLASS = 'wp-block-react-wordpress-theme-posts-list';
 
 /**
  * @typedef {Object} ViewProps The Edit component props.
@@ -26,7 +26,7 @@ const BLOCK_CLASS = 'asdasdasd';
 const View = ( { perPage } ) => {
     return (
         <div>
-
+            <h1>Posts per page: {perPage}</h1>
         </div>
     );
 };

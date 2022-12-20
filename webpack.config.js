@@ -16,9 +16,16 @@ const customRules = defaultConfig.module.rules.map((item) => {
 
 module.exports = {
     ...defaultConfig,
-    entry: glob.sync('./src/site/**/index.js').reduce((acc, path) => {
+    entry: glob.sync('./src/blocks/*/frontend/index.js').reduce((acc, path) => {
             const entry = path.replace('/index.js', '')
-                .replace('./src/site/', '').replace('js/', '')
+                .replace('./src/', '').replace('js/', '')
+
+            const entryParsed = entry.split('/')[1] ? entry + '/' + entry.split('/')[1] : entry;
+
+            if (entryParsed && !Array.isArray(entryParsed) && typeof acc[entryParsed] === 'undefined') {
+                acc[entryParsed] = path;
+                return acc;
+            }
 
             acc[entry] = path
             return acc

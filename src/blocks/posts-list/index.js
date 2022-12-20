@@ -1,5 +1,5 @@
 import {registerBlockType} from '@wordpress/blocks';
-import edit from './edit.js';
+import edit from './editor/edit.js';
 import metadata from './block.json';
 
 registerBlockType(metadata, {

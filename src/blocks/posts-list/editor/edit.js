@@ -1,6 +1,6 @@
 import Inspector from "./inspector";
 import './editor.scss';
-import metadata from './block.json';
+import metadata from '../block.json';
 
 import {useEffect} from '@wordpress/element';
 
