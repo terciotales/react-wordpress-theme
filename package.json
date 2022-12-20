@@ -3,8 +3,6 @@
     "version": "1.0.0",
     "main": "src/index.js",
     "scripts": {
-        "preview": "npm-run-all --parallel sync start",
-        "sync": "browser-sync start -p 'react-wordpress-theme.local' --files '**/*.php' 'build/*.js' 'build/*.css'",
         "build": "wp-scripts build",
         "start": "wp-scripts start",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,9 +28,7 @@
         "@wordpress/icons": "^9.13.0",
         "@wordpress/notices": "^3.22.0",
         "@wordpress/primitives": "^3.20.0",
-        "@wordpress/scripts": "^24.6.0",
-        "browser-sync": "^2.11.2",
-        "npm-run-all": "^4.1.5"
+        "@wordpress/scripts": "^24.6.0"
     },
     "dependencies": {
         "classnames": "^2.3.1",
