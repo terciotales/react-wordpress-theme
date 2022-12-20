@@ -44,6 +44,7 @@
         "@wordpress/primitives": "^3.20.0",
         "@wordpress/scripts": "^24.6.0",
         "array-move": "^4.0.0",
+        "babel-plugin-styled-components": "^2.0.7",
         "clean-webpack-plugin": "^3.0.0",
         "crypto-js": "^4.1.1",
         "eslint": "^8.11.0",

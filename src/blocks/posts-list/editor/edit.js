@@ -8,7 +8,9 @@ import {
     useBlockProps
 } from '@wordpress/block-editor';
 
-const PostsList = (props) => {
+import PostsList from "../components/posts-list";
+
+const Block = (props) => {
     const {attributes, setAttributes} = props
 
     const inlineStyle = {};
@@ -28,9 +30,9 @@ const PostsList = (props) => {
             />
 
             <div {...blockProps}>
-                <div className="posts-list"></div>
+                <PostsList perPage={attributes.perPage}/>
             </div>
         </>
     );
 }
-export default PostsList;
+export default Block;
