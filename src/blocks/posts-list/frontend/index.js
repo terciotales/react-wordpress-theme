@@ -1,39 +1,29 @@
-/* global postsList */
-
-import domReady from '@wordpress/dom-ready';
-import './index.scss';
+/* global RTW_posts_list */
 
 /**
  * WordPress dependencies
  */
+import domReady from "@wordpress/dom-ready";
 import {render} from '@wordpress/element';
 
-const BLOCK_CLASS = 'wp-block-react-wordpress-theme-posts-list';
-
-import metadata from '../block.json';
-
 /**
- * Internal dependencies
+ * Block dependencies
  */
+import PostsList from "../components/posts-list.js";
+import metadata from '../block.json';
+import './index.scss';
 
-import View from "../components/view";
+const blockClass = `.wp-block-${metadata.name.replace('/', '-')}`;
 
-// Finds the block containers, and render the React component in them.
+domReady(function () {
+    const blocks = document.querySelectorAll(blockClass)
 
+    blocks?.forEach((block) => {
+        const instanceId = block.getAttribute('data-block-instance');
+        const props = RTW_posts_list[instanceId];
 
+        if (!props) return;
 
-domReady( function () {
-    document
-        .querySelectorAll( `.${ BLOCK_CLASS }` )
-        ?.forEach( ( blockContainer ) => {
-            const instanceId = blockContainer.getAttribute( 'data-block-instance' );
-            // @ts-ignore this is a global variable.
-            const props = postsList[ instanceId ];
-
-            if ( ! props ) {
-                return;
-            }
-
-            render( <View { ...props } />, blockContainer );
-        } );
-} );
+        render(<PostsList {...props} />, block);
+    });
+});

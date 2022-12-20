@@ -23,7 +23,7 @@ abstract class RTW_Block extends RTW_Setup {
     }
 
     public function register_blocks(): void {
-        register_block_type(THEME_SRC_BLOCKS_DIRECTORY . $this->name,
+        register_block_type_from_metadata(THEME_SRC_BLOCKS_DIRECTORY . $this->name,
             ['render_callback' => [$this, 'render_block']]
         );
     }
@@ -53,7 +53,7 @@ abstract class RTW_Block extends RTW_Setup {
         wp_enqueue_script(
             get_stylesheet() . '-script-' . $this->name,
             THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.js",
-            ['wp-element'],
+            ['wp-element', 'wp-dom-ready'],
             $this->version
         );
 
@@ -71,16 +71,15 @@ abstract class RTW_Block extends RTW_Setup {
      * @return string The inline script.
      */
     protected function get_inline_script($attributes): string {
+        $object_name = 'RTW_' . str_replace('-', '_', $this->name);
+        $script = '';
+
         ob_start();
 
-        $script = [
-            "if ( 'undefined' === typeof postsList ) {",
-            "var postsList = {};",
-            "}",
-            "postsList[ " . esc_js(self::$instance_id) . " ] = " . wp_json_encode($attributes) . ";",
-        ];
+        $script .= sprintf("if( 'undefined' === typeof %s) { var %s = {}; }", $object_name, $object_name);
+        $script .= sprintf('%s[%s] = %s;', $object_name, esc_js(self::$instance_id), wp_json_encode($attributes));
 
-        echo implode("\n", $script);
+        echo $script;
 
         return ob_get_clean();
     }
