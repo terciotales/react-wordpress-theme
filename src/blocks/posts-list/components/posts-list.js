@@ -1,33 +1,62 @@
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import {useSelect} from "@wordpress/data";
 
 /**
- * Internal dependencies
+ * Block dependencies
  */
+import metadata from '../block.json';
+import Loader from "./loader/loader";
+import PostCard from "./post-card";
 
-/**
- * @typedef {Object} ViewProps The Edit component props.
- * @property {string} className The class name.
- * @property {string} option1 The first option.
- * @property {string} option2 The second option.
- * @property {string} question The survey question.
- */
+const blockClass = `.wp-block-${metadata.name.replace('/', '-')}`;
 
-/**
- * The Edit component for the block.
- *
- * @param {Object} props The component props.
- * @param {string} props.perPage The class name.
- */
-const PostsList = ( { perPage } ) => {
+const PostsList = ({perPage}) => {
+
+    // const {posts} = wp.data.useSelect;
+
+    const {
+        posts,
+        isResolvingPosts,
+        hasResolvedPosts
+    } = useSelect(select => {
+        const {getEntityRecords, hasFinishedResolution, isResolving} = select('core');
+
+        const args = [
+            'postType',
+            'post',
+            {per_page: -1, status: ['publish', 'draft']},
+        ];
+
+        return {
+            posts: getEntityRecords(...args),
+            isResolvingPosts: isResolving('getEntityRecords', args),
+            hasResolvedPosts: hasFinishedResolution(
+                'getEntityRecords',
+                args
+            ),
+        };
+    }, []);
+
     return (
         <div>
-            <h1>Posts per page: {perPage}</h1>
+            <h1>Posts List</h1>
+            {isResolvingPosts &&
+                <Loader/>
+            }
+            {hasResolvedPosts &&
+                <div className="posts-list">
+                    {posts?.map((post, index) => {
+                        return (
+                            <PostCard post={post}/>
+                        )
+                    })}
+                </div>
+            }
         </div>
-    );
-};
+    )
+}
+
 
 export default PostsList;

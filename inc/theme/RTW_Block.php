@@ -53,7 +53,7 @@ abstract class RTW_Block extends RTW_Setup {
         wp_enqueue_script(
             get_stylesheet() . '-script-' . $this->name,
             THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.js",
-            ['wp-element', 'wp-dom-ready'],
+            ['wp-element', 'wp-dom-ready', 'wp-data', 'wp-hooks', 'wp-core-data'],
             $this->version
         );
 
