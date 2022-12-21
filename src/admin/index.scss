@@ -1,10 +1,116 @@
 .container-controllers {
-  gap: 15px;
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
 
-  > * {
-    margin-bottom: 0 !important;
-  }
+    > * {
+        margin-bottom: 0 !important;
+    }
+}
+
+
+/*Sidebar*/
+.container-controllers {
+    .floating-controls {
+        border-radius: 2px;
+        border: 1px solid #757575;
+        position: relative;
+
+        &:last-child {
+            margin-bottom: 15px;
+        }
+
+        .icon,
+        .dashicon {
+            width: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &:before {
+                color: #7a8987;
+            }
+        }
+
+        .components-dropdown {
+            width: 100%;
+        }
+
+        .components-button {
+            justify-content: flex-start;
+            width: 100%;
+
+            &.icon-title {
+                height: auto;
+                flex: 1;
+                text-align: inherit;
+            }
+
+            &:last-child .dashicon {
+                margin-right: 0;
+            }
+        }
+
+        .item-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .move:before {
+                font-size: 15px;
+                color: #cdd2d2;
+            }
+        }
+    }
+
+    .select-control {
+        margin-top: 24px;
+        padding-top: 15px;
+        border-top: 1px solid #e0e0e0;
+    }
+}
+
+.floating-controls-popover-settings {
+    min-width: 300px;
+    padding: 10px;
+
+    .no-margin-bottom {
+        margin-bottom: 0!important;
+    }
+
+    .components-base-control__label {
+        font-weight: bold;
+    }
+
+    .components-placeholder {
+        min-height: initial;
+
+        .components-flex-item {
+            width: 100%;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .components-toggle-control {
+            min-width: initial;
+
+            .components-base-control__field {
+                margin-bottom: 0;
+
+                .components-form-toggle {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .svg-icon-button-group img {
+        height: 100%;
+    }
 }

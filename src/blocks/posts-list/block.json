@@ -59,6 +59,30 @@
         "blogId" : {
             "type" : "number",
             "default" : 1
+        },
+        "pagination" : {
+            "type" : "boolean",
+            "default" : false
+        },
+        "paginationPrevText" : {
+            "type" : "string",
+            "default" : "«"
+        },
+        "paginationEllipsis" : {
+            "type" : "string",
+            "default" : "..."
+        },
+        "paginationNextText" : {
+            "type" : "string",
+            "default" : "»"
+        },
+        "paginationFirstText" : {
+            "type" : "string",
+            "default" : "Primeira"
+        },
+        "paginationLastText" : {
+            "type" : "string",
+            "default" : "Última"
         }
     },
     "supports" : {

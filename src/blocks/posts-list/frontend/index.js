@@ -20,10 +20,26 @@ domReady(function () {
 
     blocks?.forEach((block) => {
         const instanceId = block.getAttribute('data-block-instance');
-        const props = RTW_posts_list[instanceId];
+        const attributes = RTW_posts_list[instanceId];
 
-        if (!props) return;
+        if (!attributes) return;
 
-        render(<PostsList {...props} />, block);
+        const args = {
+            categories: attributes.categories,
+            taxonomies: attributes.taxonomies,
+            postIn: attributes.postIn,
+            postNotIn: attributes.postNotIn,
+            postType: attributes.postType,
+            perPage: attributes.perPage,
+            offset: attributes.offset,
+            order: attributes.order,
+            orderBy: attributes.orderBy,
+            metaQuery: attributes.metaQuery,
+            search: attributes.search,
+            status: attributes.status,
+            blogId: attributes.blogId,
+        };
+
+        render(<PostsList args={args} />, block);
     });
 });

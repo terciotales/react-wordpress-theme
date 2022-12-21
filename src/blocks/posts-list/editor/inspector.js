@@ -2,13 +2,15 @@ import {
     PanelBody,
     ToggleControl,
     BaseControl,
+    Button,
     __experimentalInputControl as InputControl,
+    Dropdown,
     SelectControl,
     QueryControls,
-    TextControl
+    TextControl, Dashicon, Placeholder, Flex
 } from "@wordpress/components";
 
-import { __ } from '@wordpress/i18n';
+import {__} from '@wordpress/i18n';
 
 import {InspectorControls} from "@wordpress/block-editor";
 
@@ -28,57 +30,57 @@ const Inspector = ({attributes, setAttributes, args}) => {
 
         return {
             postTypes: getPostTypes(),
-            categoriesList:getEntityRecords( 'taxonomy', 'category', { per_page: 100, context: 'view' })
+            categoriesList: getEntityRecords('taxonomy', 'category', {per_page: 100, context: 'view'})
         };
-    }, [postTypes, categories, order, orderBy, perPage]);
+    }, [postType, order, orderBy, perPage, categories, offset]);
 
     const categorySuggestions = categoriesList?.reduce(
-        ( accumulator, category ) => ({
+        (accumulator, category) => ({
             ...accumulator,
-            [ category.name ]: category
+            [category.name]: category
         }),
         {}
     );
 
-    const selectedCategories = attributes.categories ? attributes.categories.map( category => {
-        const cat = categoriesList?.find( cat => cat.id === Number( category.id ) );
+    const selectedCategories = attributes.categories ? attributes.categories.map(category => {
+        const cat = categoriesList?.find(cat => cat.id === Number(category.id));
         return {
             id: category.id,
             name: cat?.name || cat?.slug || ''
         };
     }) : [];
 
-    const selectedCategoryId = ( 'object' === typeof attributes.categories ) ?
+    const selectedCategoryId = ('object' === typeof attributes.categories) ?
         1 <= attributes.categories.length ? attributes.categories[0].id : undefined :
         attributes.categories;
 
     const selectCategories = value => {
         let categories;
 
-        if ( 'object' === typeof value ) {
-            if ( 0 < value.length ) {
-                categories = value.map( name => {
-                    if ( 'object' === typeof name ) {
+        if ('object' === typeof value) {
+            if (0 < value.length) {
+                categories = value.map(name => {
+                    if ('object' === typeof name) {
                         return name;
                     }
 
-                    const category = categoriesList?.find( e => e.name === name );
-                    if ( category ) {
+                    const category = categoriesList?.find(e => e.name === name);
+                    if (category) {
                         return {
                             id: category.id,
                             name
                         };
                     }
-                }).filter( e => undefined !== e );
+                }).filter(e => undefined !== e);
             }
-        } else if ( '' !== value ) {
+        } else if ('' !== value) {
             categories = [{
                 id: value,
-                name: categoriesList?.find( e => e.id === Number( value ) ).name
+                name: categoriesList?.find(e => e.id === Number(value)).name
             }];
         }
 
-        setAttributes({ categories });
+        setAttributes({categories});
     };
 
     return (
@@ -108,27 +110,107 @@ const Inspector = ({attributes, setAttributes, args}) => {
                             />
 
                             <QueryControls
-                                order={ order }
-                                orderBy={ orderBy }
-                                onOrderChange={ value => setAttributes({ order: value }) }
-                                onOrderByChange={ value => setAttributes({ orderBy: value }) }
-                                numberOfItems={ perPage }
+                                order={order}
+                                orderBy={orderBy}
+                                onOrderChange={value => setAttributes({order: value})}
+                                onOrderByChange={value => setAttributes({orderBy: value})}
+                                numberOfItems={perPage}
                                 maxItems={20}
-                                onNumberOfItemsChange={ value => setAttributes({ perPage: value }) }
-                                categorySuggestions={ categorySuggestions }
-                                selectedCategoryId={ selectedCategoryId }
-                                selectedCategories={ selectedCategories }
-                                onCategoryChange={ selectCategories }
+                                onNumberOfItemsChange={value => setAttributes({perPage: value})}
+                                categorySuggestions={categorySuggestions}
+                                selectedCategoryId={selectedCategoryId}
+                                selectedCategories={selectedCategories}
+                                onCategoryChange={selectCategories}
                             />
 
                             <TextControl
                                 label={__('Offset')}
-                                help={ __( 'Número de posts para deslocar ou passar.' ) }
+                                help={__('Número de posts para deslocar ou passar.')}
                                 type="number"
-                                value={ offset }
-                                min={ 0 }
-                                onChange={ value => setAttributes({ offset: Number( value ) }) }
+                                value={offset}
+                                min={0}
+                                onChange={value => setAttributes({offset: Number(value)})}
                             />
+
+                            <div className="floating-controls">
+                                <Dropdown
+                                    position="bottom center"
+                                    expandOnMobile={true}
+                                    renderToggle={({isOpen, onToggle}) => (
+                                        <div className='item-container'>
+                                            <Button className='dropdown-item' onClick={onToggle} text={"Paginação"}/>
+                                            <Dashicon icon={isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2'}
+                                                      className='arrow-down-alt2' onClick={onToggle}/>
+                                        </div>
+                                    )}
+                                    renderContent={() => (
+                                        <div className="floating-controls-popover-settings">
+                                            <Flex>
+                                                <BaseControl label={__('Paginação')}/>
+                                                <ToggleControl
+                                                    checked={attributes.pagination}
+                                                    onChange={value => setAttributes({pagination: value})}
+                                                />
+                                            </Flex>
+
+                                            <Placeholder
+                                                label="Navegação"
+                                                instructions="Configure os botões de navegação"
+                                                icon="leftright"
+                                            >
+                                                <Flex direction="column" gap="4">
+                                                    <Flex>
+                                                        <InputControl
+                                                            label="Primeira"
+                                                            disabled={!attributes.pagination}
+                                                            value={attributes.paginationFirstText}
+                                                            onChange={value => setAttributes({paginationFirstText: value})}
+                                                            size="small"
+                                                            style={{textAlign: 'center'}}
+                                                        />
+                                                        <InputControl
+                                                            label="Última"
+                                                            disabled={!attributes.pagination}
+                                                            value={attributes.paginationLastText}
+                                                            onChange={value => setAttributes({paginationLastText: value})}
+                                                            size="small"
+                                                            style={{textAlign: 'center'}}
+                                                        />
+                                                    </Flex>
+                                                    <Flex>
+                                                        <InputControl
+                                                            label="Anterior"
+                                                            disabled={!attributes.pagination}
+                                                            value={attributes.paginationPrevText}
+                                                            onChange={value => setAttributes({paginationPrevText: value})}
+                                                            size="small"
+                                                            style={{textAlign: 'center'}}
+                                                        />
+
+                                                        <InputControl
+                                                            label="Elipse"
+                                                            disabled={!attributes.pagination}
+                                                            value={attributes.paginationEllipsis}
+                                                            onChange={value => setAttributes({paginationEllipsis: value})}
+                                                            size="small"
+                                                            style={{textAlign: 'center'}}
+                                                        />
+
+                                                        <InputControl
+                                                            label="Próxima"
+                                                            disabled={!attributes.pagination}
+                                                            value={attributes.paginationNextText}
+                                                            onChange={value => setAttributes({paginationNextText: value})}
+                                                            size="small"
+                                                            style={{textAlign: 'center'}}
+                                                        />
+                                                    </Flex>
+                                                </Flex>
+                                            </Placeholder>
+                                        </div>
+                                    )}
+                                />
+                            </div>
                         </>
                     }
                 </div>
