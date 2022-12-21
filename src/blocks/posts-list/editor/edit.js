@@ -26,7 +26,7 @@ const Edit = (props) => {
         taxonomies: attributes.taxonomies,
         postIn: attributes.postIn,
         postNotIn: attributes.postNotIn,
-        postTypes: attributes.postTypes,
+        postType: attributes.postType,
         perPage: attributes.perPage,
         offset: attributes.offset,
         order: attributes.order,
@@ -42,6 +42,7 @@ const Edit = (props) => {
             <Inspector
                 attributes={attributes}
                 setAttributes={setAttributes}
+                args={args}
             />
 
             <div {...blockProps}>

@@ -3,7 +3,7 @@
  */
 import './index.scss';
 
-const Loader = (props ) => {
+const Loader = (props) => {
 
     return (
         <div className="loader-wrapper">

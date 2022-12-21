@@ -55,7 +55,7 @@ const controls = {
 
 const resolvers = {
     *getPosts() {
-        const posts = yield actions.getPosts( '/namespace/my-unique-url/' );
+        const posts = yield actions.getPosts( '/pmpm/my-unique-url/' );
         return actions.setPosts( posts );
     },
 };

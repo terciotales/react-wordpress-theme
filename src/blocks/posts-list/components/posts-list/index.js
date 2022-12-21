@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-import {useSelect, useDispatch} from "@wordpress/data";
-import {useState, useEffect, useCallback} from "@wordpress/element";
-import {Button, __experimentalInputControl as InputControl} from "@wordpress/components";
+import {useSelect} from "@wordpress/data";
+import {useState, useEffect} from "@wordpress/element";
+import {pickBy, isUndefined} from "lodash";
 
 /**
  * Block dependencies
@@ -12,30 +12,33 @@ import metadata from '../../block.json';
 import Loader from "../loader/index.js";
 import PostCard from "../post-card/index.js";
 
-const Index = (props) => {
-    const {args} = props;
-
-    const [perPage, setPerPage] = useState(args.perPage);
+const Index = ({args}) => {
+    const {postType, perPage, order, orderBy, categories, status, offset} = args;
     const [posts, setPosts] = useState(null);
 
     const request = useSelect(select => {
         const {getEntityRecords, hasFinishedResolution, isResolving} = select('core');
+        const catIds = categories && 0 < categories.length ? categories.map((cat) => cat.id) : [];
 
         const args = [
             'postType',
-            'post',
-            {per_page: perPage, status: ['publish', 'draft']},
+            postType,
+            pickBy({
+                categories: catIds,
+                order: order,
+                orderby: orderBy,
+                per_page: perPage,
+                offset: offset,
+                status: status
+            }, (value) => !isUndefined(value))
         ];
 
         return {
             posts: getEntityRecords(...args),
             isResolvingPosts: isResolving('getEntityRecords', args),
-            hasResolvedPosts: hasFinishedResolution(
-                'getEntityRecords',
-                args
-            ),
+            hasResolvedPosts: hasFinishedResolution('getEntityRecords', args),
         };
-    }, [posts, perPage, args]);
+    }, [posts, args]);
 
     useEffect(() => {
         if (!request.isResolvingPosts && request.hasResolvedPosts && request.posts?.length) {
@@ -46,12 +49,6 @@ const Index = (props) => {
     return (
         <div>
             <h1>Posts List</h1>
-            <InputControl
-                label="Posts por página"
-                value={perPage}
-                type="number"
-                onChange={perPage => setPerPage(perPage)}
-            />
             {request.isResolvingPosts &&
                 <Loader/>
             }

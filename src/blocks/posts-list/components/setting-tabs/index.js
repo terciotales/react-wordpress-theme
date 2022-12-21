@@ -7,11 +7,11 @@ import classnames from "classnames";
 /**
  * Internal dependencies
  */
-import "./editor.scss";
+import "./index.scss";
 
-const ControllerButtons = ({state, setState, options}) => {
+const SettingTabs = ({state, setState, options}) => {
     return (
-        <div className="package-component-controller-buttons">
+        <div className="component-setting-tabs">
             {options?.map((option, index) => (
                 <Button
                     className={
@@ -33,4 +33,4 @@ const ControllerButtons = ({state, setState, options}) => {
     )
 }
 
-export default ControllerButtons;
+export default SettingTabs;

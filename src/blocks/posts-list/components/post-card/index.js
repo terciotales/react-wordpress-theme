@@ -1,7 +1,7 @@
 /**
  * Block dependencies
  */
-import metadata from '../block.json';
+import metadata from '../../block.json';
 import classnames from 'classnames';
 
 const Index = (props ) => {
