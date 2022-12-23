@@ -38,6 +38,7 @@ domReady(function () {
             search: attributes.search,
             status: attributes.status,
             blogId: attributes.blogId,
+            context: 'view'
         };
 
         render(<PostsList args={args} />, block);

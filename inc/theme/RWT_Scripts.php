@@ -7,7 +7,7 @@ class RWT_Scripts extends RTW_Setup {
     public function setup() {
         add_action( 'wp_enqueue_scripts', [$this, '_enqueue_public_scripts'] );
         add_action( 'admin_enqueue_scripts', [$this, '_enqueue_admin_scripts'] );
-        add_action( 'enqueue_block_editor_assets', [$this, '_enqueue_blocks_assets'], 1 );
+        add_action( 'enqueue_block_editor_assets', [$this, '_enqueue_editor_assets'], 1 );
     }
 
     /**
@@ -69,14 +69,14 @@ class RWT_Scripts extends RTW_Setup {
     /**
      * Load Gutenberg assets.
      */
-    public function _enqueue_blocks_assets() {
+    public function _enqueue_editor_assets() {
         wp_add_inline_script(
             'wp-codemirror',
             'window.CodeMirror = wp.CodeMirror;'
         );
 
         # Script from block
-        $script_asset_path = THEME_BUNDLE_DIRECTORY . "/blocks.asset.php";
+        $script_asset_path = THEME_BUNDLE_DIRECTORY . "/editor.asset.php";
 
         if ( ! is_readable( $script_asset_path ) ) {
             throw new Error(
@@ -85,18 +85,28 @@ class RWT_Scripts extends RTW_Setup {
         }
 
         $script_asset = require( $script_asset_path );
-		
+
         wp_enqueue_script(
-            get_stylesheet() . '-script-blocks',
-            THEME_BUNDLE_DIRECTORY_URI . '/blocks.js',
+            get_stylesheet() . '-script-editor',
+            THEME_BUNDLE_DIRECTORY_URI . '/editor.js',
             array_merge( $script_asset['dependencies'], ['code-editor', 'csslint'] ),
             $script_asset['version'],
             true
         );
 
+        wp_localize_script(
+            get_stylesheet() . '-script-editor',
+            'RTW_Object',
+            [
+                'postTypes' => array_map(function ($post_type) {
+                    return $post_type->name = $post_type->labels->singular_name;
+                }, get_post_types([], 'objects'))
+            ]
+        );
+
         wp_enqueue_style(
             get_stylesheet() . '-style-blocks',
-            THEME_BUNDLE_DIRECTORY_URI . '/blocks.css',
+            THEME_BUNDLE_DIRECTORY_URI . '/editor.css',
             ['code-editor'],
             $this->theme_version,
             'all'

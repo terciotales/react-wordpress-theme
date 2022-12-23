@@ -19,23 +19,4 @@ class RTW_Block_Posts_List extends RTW_Block {
         <?php
         return ob_get_clean();
     }
-
-    public function register_editor_assets(): void {
-        wp_register_style(
-            get_stylesheet() . '-style-editor-' . $this->name,
-            THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.css",
-            false,
-            $this->version
-        );
-
-        wp_localize_script(
-            get_stylesheet() . '-script-editor-' . $this->name,
-            'RTW_' . str_replace('-', '_', $this->name),
-            [
-                'postTypes' => array_map(function ($post_type) {
-                    return $post_type->name = $post_type->labels->singular_name;
-                }, get_post_types([], 'objects'))
-            ]
-        );
-    }
 }

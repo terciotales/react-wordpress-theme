@@ -34,7 +34,7 @@ abstract class RTW_Block extends RTW_Setup {
     public function register_editor_assets(): void {
         wp_register_style(
             get_stylesheet() . '-style-editor-' . $this->name,
-            THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.css",
+            THEME_SRC_BLOCKS_DIRECTORY_URI . "blocks.css",
             false,
             $this->version
         );
@@ -50,10 +50,20 @@ abstract class RTW_Block extends RTW_Setup {
     }
 
     protected function set_inline_scripts($attributes) {
+        $script_asset_path = THEME_SRC_BLOCKS_DIRECTORY . "{$this->name}/frontend/{$this->name}.asset.php";
+
+        if ( ! is_readable( $script_asset_path ) ) {
+            throw new Error(
+                'You need to run `npm start` or `npm run build` for the "create-block/register-block-type" block first.'
+            );
+        }
+
+        $script_asset = require( $script_asset_path );
+
         wp_enqueue_script(
             get_stylesheet() . '-script-' . $this->name,
             THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.js",
-            ['wp-element', 'wp-dom-ready', 'wp-data', 'wp-hooks', 'wp-core-data', 'wp-components'],
+            array_merge( $script_asset['dependencies'], ['wp-hooks', 'wp-core-data', 'wp-components'] ),
             $this->version
         );
 

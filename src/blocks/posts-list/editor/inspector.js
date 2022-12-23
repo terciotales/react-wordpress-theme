@@ -25,11 +25,10 @@ const Inspector = ({attributes, setAttributes, args}) => {
 
     const [tab, setTab] = useState('settings');
 
-    const {postTypes, categoriesList} = useSelect(select => {
-        const {getEntityRecords, getPostTypes} = select('core');
+    const {categoriesList} = useSelect(select => {
+        const {getEntityRecords} = select('core');
 
         return {
-            postTypes: getPostTypes(),
             categoriesList: getEntityRecords('taxonomy', 'category', {per_page: 100, context: 'view'})
         };
     }, [postType, order, orderBy, perPage, categories, offset]);
@@ -83,6 +82,8 @@ const Inspector = ({attributes, setAttributes, args}) => {
         setAttributes({categories});
     };
 
+    console.log(RTW_Object.postTypes);
+
     return (
         <InspectorControls>
             <PanelBody>
@@ -94,7 +95,7 @@ const Inspector = ({attributes, setAttributes, args}) => {
                         {tab: 'layout', icon: 'layout', label: 'Layout'}
                     ]}
                 />
-                <div className="container-controllers">
+                <div className="container-controllers height-100">
                     {tab === 'settings' &&
                         <>
                             <SelectControl
@@ -102,7 +103,7 @@ const Inspector = ({attributes, setAttributes, args}) => {
                                 value={postType}
                                 onChange={(value) => value && setAttributes({postType: value})}
                                 options={
-                                    postTypes?.map(item => ({
+                                    [RTW_Object.postTypes]?.map(item => ({
                                         label: item.name,
                                         value: item.slug
                                     }))
@@ -137,11 +138,14 @@ const Inspector = ({attributes, setAttributes, args}) => {
                                     position="bottom center"
                                     expandOnMobile={true}
                                     renderToggle={({isOpen, onToggle}) => (
-                                        <div className='item-container'>
-                                            <Button className='dropdown-item' onClick={onToggle} text={"Paginação"}/>
-                                            <Dashicon icon={isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2'}
-                                                      className='arrow-down-alt2' onClick={onToggle}/>
-                                        </div>
+                                        <BaseControl label="Paginação" className='item-container' help="Divida os posts em páginas separadas.">
+                                            <div className="dropdow-click-area">
+                                                <Button className='dropdown-item' onClick={onToggle}
+                                                        text={"Configurar"}/>
+                                                <Dashicon icon={isOpen ? 'arrow-up-alt2' : 'arrow-down-alt2'}
+                                                          className='arrow-down-alt2' onClick={onToggle}/>
+                                            </div>
+                                        </BaseControl>
                                     )}
                                     renderContent={() => (
                                         <div className="floating-controls-popover-settings">

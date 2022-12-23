@@ -11,13 +11,9 @@ import {
 import PostsList from "../components/posts-list";
 
 const Edit = (props) => {
-    const {attributes, setAttributes} = props
+    const {attributes, setAttributes, clientId} = props
 
     const inlineStyle = {};
-
-    useEffect(() => {
-        setAttributes({inlineStyle: inlineStyle});
-    }, []);
 
     const blockProps = useBlockProps();
 
@@ -35,7 +31,10 @@ const Edit = (props) => {
         search: attributes.search,
         status: attributes.status,
         blogId: attributes.blogId,
+        context: 'edit'
     };
+
+    console.log(clientId);
 
     return (
         <>

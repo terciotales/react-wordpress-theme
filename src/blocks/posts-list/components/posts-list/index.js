@@ -13,23 +13,19 @@ import Loader from "../loader/index.js";
 import PostCard from "../post-card/index.js";
 
 const Index = ({args}) => {
-    const {postType, perPage, order, orderBy, categories, status, offset} = args;
+    const {postType, perPage, order, orderBy, categories, status, offset, context} = args;
     const [posts, setPosts] = useState(null);
 
     const request = useSelect(select => {
-        const {getEntityRecords, hasFinishedResolution, isResolving} = select('core');
+        const {getEntityRecords, hasFinishedResolution, isResolving, hasEntityRecords} = select('core');
         const catIds = categories && 0 < categories.length ? categories.map((cat) => cat.id) : [];
 
         const args = [
             'postType',
             postType,
             pickBy({
-                categories: catIds,
-                order: order,
-                orderby: orderBy,
                 per_page: perPage,
-                offset: offset,
-                status: status
+                context: context
             }, (value) => !isUndefined(value))
         ];
 
@@ -41,7 +37,7 @@ const Index = ({args}) => {
     }, [posts, args]);
 
     useEffect(() => {
-        if (!request.isResolvingPosts && request.hasResolvedPosts && request.posts?.length) {
+        if (!request.isResolvingPosts && request.hasResolvedPosts && request.posts?.length > 0) {
             setPosts(request.posts);
         }
     }, [request]);

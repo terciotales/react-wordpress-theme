@@ -13,9 +13,15 @@
 /*Sidebar*/
 .container-controllers {
     .floating-controls {
-        border-radius: 2px;
-        border: 1px solid #757575;
-        position: relative;
+        .components-base-control__field {
+            width: 100%;
+        }
+
+        .dropdow-click-area {
+            border-radius: 2px;
+            border: 1px solid #757575;
+            position: relative;
+        }
 
         &:last-child {
             margin-bottom: 15px;
@@ -60,7 +66,7 @@
         .item-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
 
             .move:before {
                 font-size: 15px;
@@ -76,12 +82,16 @@
     }
 }
 
+.height-100 {
+    height: 100%;
+}
+
 .floating-controls-popover-settings {
     min-width: 300px;
     padding: 10px;
 
     .no-margin-bottom {
-        margin-bottom: 0!important;
+        margin-bottom: 0 !important;
     }
 
     .components-base-control__label {
