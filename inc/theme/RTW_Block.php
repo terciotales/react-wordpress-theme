@@ -34,14 +34,14 @@ abstract class RTW_Block extends RTW_Setup {
     public function register_editor_assets(): void {
         wp_register_style(
             get_stylesheet() . '-style-editor-' . $this->name,
-            THEME_SRC_BLOCKS_DIRECTORY_URI . "blocks.css",
+            THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.css",
             false,
             $this->version
         );
     }
 
     public function register_frontend_assets(): void {
-        wp_enqueue_style(
+        wp_register_style(
             get_stylesheet() . '-style-' . $this->name,
             THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.css",
             false,
@@ -60,7 +60,7 @@ abstract class RTW_Block extends RTW_Setup {
 
         $script_asset = require( $script_asset_path );
 
-        wp_enqueue_script(
+        wp_register_script(
             get_stylesheet() . '-script-' . $this->name,
             THEME_SRC_BLOCKS_DIRECTORY_URI . "{$this->name}/frontend/{$this->name}.js",
             array_merge( $script_asset['dependencies'], ['wp-hooks', 'wp-core-data', 'wp-components'] ),

@@ -25,10 +25,11 @@ const Inspector = ({attributes, setAttributes, args}) => {
 
     const [tab, setTab] = useState('settings');
 
-    const {categoriesList} = useSelect(select => {
-        const {getEntityRecords} = select('core');
+    const {categoriesList, postTypes} = useSelect(select => {
+        const {getEntityRecords, getPostTypes} = select('core');
 
         return {
+            postTypes: getPostTypes(),
             categoriesList: getEntityRecords('taxonomy', 'category', {per_page: 100, context: 'view'})
         };
     }, [postType, order, orderBy, perPage, categories, offset]);
@@ -52,6 +53,8 @@ const Inspector = ({attributes, setAttributes, args}) => {
     const selectedCategoryId = ('object' === typeof attributes.categories) ?
         1 <= attributes.categories.length ? attributes.categories[0].id : undefined :
         attributes.categories;
+
+    console.log('asdasdasdasda')
 
     const selectCategories = value => {
         let categories;
@@ -81,8 +84,6 @@ const Inspector = ({attributes, setAttributes, args}) => {
 
         setAttributes({categories});
     };
-
-    console.log(RTW_Object.postTypes);
 
     return (
         <InspectorControls>

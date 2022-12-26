@@ -105,7 +105,7 @@ class RWT_Scripts extends RTW_Setup {
         );
 
         wp_enqueue_style(
-            get_stylesheet() . '-style-blocks',
+            get_stylesheet() . '-style-editor',
             THEME_BUNDLE_DIRECTORY_URI . '/editor.css',
             ['code-editor'],
             $this->theme_version,

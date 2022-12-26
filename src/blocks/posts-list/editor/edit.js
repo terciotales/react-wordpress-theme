@@ -34,7 +34,7 @@ const Edit = (props) => {
         context: 'edit'
     };
 
-    console.log(clientId);
+    console.log('asdasdasdasdasdasd')
 
     return (
         <>

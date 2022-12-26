@@ -9,7 +9,7 @@ import {render} from '@wordpress/element';
 /**
  * Block dependencies
  */
-import PostsList from "../components/posts-list/index.js";
+import PostsList from "../components/posts-list";
 import metadata from '../block.json';
 import './index.scss';
 
