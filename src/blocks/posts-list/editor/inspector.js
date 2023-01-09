@@ -54,7 +54,7 @@ const Inspector = ({attributes, setAttributes, args}) => {
         1 <= attributes.categories.length ? attributes.categories[0].id : undefined :
         attributes.categories;
 
-    console.log('asdasdasdasda')
+    console.log(Object.entries(postTypes ?? {}));
 
     const selectCategories = value => {
         let categories;

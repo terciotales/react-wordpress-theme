@@ -34,8 +34,6 @@ const Edit = (props) => {
         context: 'edit'
     };
 
-    console.log('asdasdasdasdasdasd')
-
     return (
         <>
             <Inspector
