@@ -25,11 +25,10 @@ const Inspector = ({attributes, setAttributes, args}) => {
 
     const [tab, setTab] = useState('settings');
 
-    const {categoriesList, postTypes} = useSelect(select => {
-        const {getEntityRecords, getPostTypes} = select('core');
+    const {categoriesList} = useSelect(select => {
+        const {getEntityRecords} = select('core');
 
         return {
-            postTypes: getPostTypes(),
             categoriesList: getEntityRecords('taxonomy', 'category', {per_page: 100, context: 'view'})
         };
     }, [postType, order, orderBy, perPage, categories, offset]);
@@ -53,8 +52,6 @@ const Inspector = ({attributes, setAttributes, args}) => {
     const selectedCategoryId = ('object' === typeof attributes.categories) ?
         1 <= attributes.categories.length ? attributes.categories[0].id : undefined :
         attributes.categories;
-
-    console.log('asdasdasdasda')
 
     const selectCategories = value => {
         let categories;
@@ -85,6 +82,12 @@ const Inspector = ({attributes, setAttributes, args}) => {
         setAttributes({categories});
     };
 
+    const postTypes = [];
+
+    for (const [key, value] of Object.entries(RTW_Object.postTypes)) {
+        postTypes.push({label: value, value: key});
+    }
+
     return (
         <InspectorControls>
             <PanelBody>
@@ -93,7 +96,8 @@ const Inspector = ({attributes, setAttributes, args}) => {
                     setState={setTab}
                     options={[
                         {tab: 'settings', icon: 'admin-generic', label: 'Configurações'},
-                        {tab: 'layout', icon: 'layout', label: 'Layout'}
+                        {tab: 'layout', icon: 'layout', label: 'Layout'},
+                        {tab: 'card', icon: 'index-card', label: 'Card'}
                     ]}
                 />
                 <div className="container-controllers height-100">
@@ -103,12 +107,7 @@ const Inspector = ({attributes, setAttributes, args}) => {
                                 label="Tipo de Postagem"
                                 value={postType}
                                 onChange={(value) => value && setAttributes({postType: value})}
-                                options={
-                                    [RTW_Object.postTypes]?.map(item => ({
-                                        label: item.name,
-                                        value: item.slug
-                                    }))
-                                }
+                                options={postTypes}
                             />
 
                             <QueryControls
@@ -139,7 +138,8 @@ const Inspector = ({attributes, setAttributes, args}) => {
                                     position="bottom center"
                                     expandOnMobile={true}
                                     renderToggle={({isOpen, onToggle}) => (
-                                        <BaseControl label="Paginação" className='item-container' help="Divida os posts em páginas separadas.">
+                                        <BaseControl label="Paginação" className='item-container'
+                                                     help="Divida os posts em páginas separadas.">
                                             <div className="dropdow-click-area">
                                                 <Button className='dropdown-item' onClick={onToggle}
                                                         text={"Configurar"}/>

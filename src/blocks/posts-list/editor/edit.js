@@ -34,7 +34,17 @@ const Edit = (props) => {
         context: 'edit'
     };
 
-    console.log('asdasdasdasdasdasd')
+    const layout = {
+        layoutType: 'list',
+        gridConfigs: {},
+        listConfigs: {},
+        carouselConfigs: {},
+        masonryConfigs: {},
+    };
+
+    const card = {
+
+    };
 
     return (
         <>
@@ -45,7 +55,7 @@ const Edit = (props) => {
             />
 
             <div {...blockProps}>
-                <PostsList args={args}/>
+                <PostsList args={args} layout={layout}/>
             </div>
         </>
     );

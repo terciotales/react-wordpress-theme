@@ -4,6 +4,14 @@
     gap: 30px;
     width: 100%;
 
+    h1 {
+        margin: 0;
+
+        @media only screen and (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
+
     .posts-wrapper {
         display: flex;
         flex-direction: column;

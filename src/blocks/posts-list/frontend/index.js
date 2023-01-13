@@ -41,6 +41,19 @@ domReady(function () {
             context: 'view'
         };
 
-        render(<PostsList args={args} />, block);
+        const layout = {
+            layoutType: 'list',
+            gridConfigs: {},
+            listConfigs: {},
+            carouselConfigs: {},
+            masonryConfigs: {},
+        };
+
+        const card = {
+            style: 'default',
+            elements: {}
+        };
+
+        render(<PostsList args={args} layout={layout} />, block);
     });
 });

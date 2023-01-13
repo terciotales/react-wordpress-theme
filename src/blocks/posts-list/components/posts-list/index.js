@@ -4,6 +4,7 @@
 import {useSelect} from "@wordpress/data";
 import {useState, useEffect} from "@wordpress/element";
 import {pickBy, isUndefined} from "lodash";
+import {useEntityRecords} from "@wordpress/core-data";
 
 /**
  * Block dependencies
@@ -14,8 +15,16 @@ import PostCard from "../post-card/index.js";
 import Skeleton from "../skeleton/index.js";
 import './index.scss';
 
-const PostsList = ({args}) => {
+const PostsList = (props) => {
     const [posts, setPosts] = useState(null);
+    const [post, setPost] = useState(null);
+    const { records, isResolving } = useEntityRecords( 'postType', 'post' );
+
+    const {
+        args,
+        layout,
+        card
+    } = props;
 
     const {
         postType,
@@ -28,25 +37,40 @@ const PostsList = ({args}) => {
         context
     } = args;
 
+    const {
+        layoutType,
+        gridConfigs,
+        listConfigs,
+        carouselConfigs,
+        masonryConfigs
+    } = layout;
+
     const request = useSelect(select => {
-        const {getEntityRecords, hasFinishedResolution, isResolving, hasEntityRecords} = select('core');
+        const {getEntityRecords, hasFinishedResolution, isResolving, getEntitiesByKind} = select('core');
         const catIds = categories && 0 < categories.length ? categories.map((cat) => cat.id) : [];
 
         const args = [
             'postType',
             postType,
             pickBy({
+                categories: catIds,
+                order: order,
+                orderby: orderBy,
                 per_page: perPage,
+                offset: offset,
+                status: status,
                 context: context
             }, (value) => !isUndefined(value))
         ];
 
         return {
             posts: getEntityRecords(...args),
+            config: getEntitiesByKind('postType', postType),
             isResolvingPosts: isResolving('getEntityRecords', args),
             hasResolvedPosts: hasFinishedResolution('getEntityRecords', args),
         };
     }, [args]);
+
 
     useEffect(() => {
         if (!request.isResolvingPosts && request.hasResolvedPosts && request.posts?.length > 0) {
@@ -64,7 +88,7 @@ const PostsList = ({args}) => {
                 {request.hasResolvedPosts && posts?.length > 0 &&
                     posts?.map((post, index) => {
                         return (
-                            <PostCard post={post}/>
+                            <PostCard post={post} setPost={setPost}/>
                         )
                     })
                 }
