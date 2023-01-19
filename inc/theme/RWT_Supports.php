@@ -12,6 +12,19 @@ class RWT_Supports extends RTW_Setup {
     }
 
     public function remove_supports() {
+        $post_type = 'post';
+
+        register_post_meta($post_type, 'teste', [
+            'auth_callback'     => function () {
+                return current_user_can('edit_posts');
+            },
+            'sanitize_callback' => 'sanitize_text_field',
+            'show_in_rest'      => true,
+            'single'            => true,
+            'type'              => 'string',
+        ]);
+
+
         remove_theme_support('core-block-patterns');
     }
 }

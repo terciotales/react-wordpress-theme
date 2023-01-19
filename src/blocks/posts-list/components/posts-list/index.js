@@ -46,7 +46,7 @@ const PostsList = (props) => {
     } = layout;
 
     const request = useSelect(select => {
-        const {getEntityRecords, hasFinishedResolution, isResolving, getEntitiesByKind} = select('core');
+        const {getEntityRecords, hasFinishedResolution, isResolving, getEntityConfig} = select('core');
         const catIds = categories && 0 < categories.length ? categories.map((cat) => cat.id) : [];
 
         const args = [
@@ -65,12 +65,10 @@ const PostsList = (props) => {
 
         return {
             posts: getEntityRecords(...args),
-            config: getEntitiesByKind('postType', postType),
             isResolvingPosts: isResolving('getEntityRecords', args),
             hasResolvedPosts: hasFinishedResolution('getEntityRecords', args),
         };
     }, [args]);
-
 
     useEffect(() => {
         if (!request.isResolvingPosts && request.hasResolvedPosts && request.posts?.length > 0) {
