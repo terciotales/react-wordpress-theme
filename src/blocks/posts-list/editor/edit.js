@@ -11,7 +11,7 @@ import {
 import PostsList from "../components/posts-list";
 
 const Edit = (props) => {
-    const {attributes, setAttributes, clientId} = props
+    const {attributes, setAttributes, clientId, toggleSelection} = props
 
     const inlineStyle = {};
 
@@ -55,7 +55,7 @@ const Edit = (props) => {
             />
 
             <div {...blockProps}>
-                <PostsList args={args} layout={layout}/>
+                <PostsList args={args} toggleSelection={toggleSelection} layout={layout}/>
             </div>
         </>
     );

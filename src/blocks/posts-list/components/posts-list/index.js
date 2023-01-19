@@ -13,17 +13,21 @@ import metadata from '../../block.json';
 import Loader from "../loader/index.js";
 import PostCard from "../post-card/index.js";
 import Skeleton from "../skeleton/index.js";
+import Layout from "../layout/index.js";
+import {Responsive as ResponsiveGridLayout} from "react-grid-layout";
 import './index.scss';
 
 const PostsList = (props) => {
     const [posts, setPosts] = useState(null);
     const [post, setPost] = useState(null);
-    const { records, isResolving } = useEntityRecords( 'postType', 'post' );
+    const {records, isResolving} = useEntityRecords('postType', 'post');
 
     const {
         args,
         layout,
-        card
+        setLayout,
+        card,
+        toggleSelection,
     } = props;
 
     const {
@@ -84,11 +88,14 @@ const PostsList = (props) => {
                     <Skeleton number={perPage}/>
                 }
                 {request.hasResolvedPosts && posts?.length > 0 &&
-                    posts?.map((post, index) => {
-                        return (
-                            <PostCard post={post} setPost={setPost}/>
-                        )
-                    })
+                    <>
+                        {context === 'edit' &&
+                            <Layout posts={posts} setLayout={setLayout} />
+                        }
+                        {context === 'view' &&
+                            <></>
+                        }
+                    </>
                 }
                 {request.hasResolvedPosts && posts?.length === 0 &&
                     <p>Nenhum post encontrado</p>
