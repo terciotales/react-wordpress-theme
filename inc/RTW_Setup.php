@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Nucleoweb_Setup
+ * Class RTW_Setup
  *
  * Cria um singleton para cada classe de configuração do sistema
  *
